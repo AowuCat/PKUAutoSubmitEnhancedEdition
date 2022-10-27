@@ -86,7 +86,6 @@ def stu_io(driver):
     # 点确定
     time.sleep(3)
     easy_click(driver, By.XPATH, "//span[text()='确定']")
-    input()
     # 默认当天
     places = ["燕园", "物理学院"]
     easy_click(driver, By.XPATH, "//label[text()='园区（出）']/..//div")
@@ -102,7 +101,6 @@ def stu_io(driver):
     
     # 别的都选好了
     easy_click(driver, By.XPATH, "//span[text()='保存 ']")
-    input()
     easy_click(driver, By.XPATH, "//div[@class='el-message-box__btns']/button[2]")
     print("今日信息已提交")
 
