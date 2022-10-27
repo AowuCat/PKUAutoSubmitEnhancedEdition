@@ -54,6 +54,14 @@ def easy_click(driver, by_what, s):
     raise Exception("%s无法找到" % s)
 
 
+def is_exist(driver, by_what, s):
+    try:
+        driver.find_element(by_what, s)
+        return True
+    except:
+        return False
+
+
 def login(driver, username, password):
     iaaaUrl = 'https://iaaa.pku.edu.cn/iaaa/oauth.jsp'
     appName = quote('北京大学校内信息门户新版')
@@ -76,22 +84,25 @@ def stu_io(driver):
     # 选择园区往返
     easy_click(driver, By.XPATH, "//span[text()=' 园区往返申请']")
     # 点确定
-    time.sleep(5)
+    time.sleep(3)
     easy_click(driver, By.XPATH, "//span[text()='确定']")
-    
+    input()
     # 默认当天
-    places = ["燕园", "中关新园", "物理学院"]
-    easy_click(driver, By.XPATH, "//label[text()='园区（出）']/..//input")
+    places = ["燕园", "物理学院"]
+    easy_click(driver, By.XPATH, "//label[text()='园区（出）']/..//div")
     for i in places:
-        elements = easy_find_elements(driver, By.XPATH, "//div[@class='el-scrollbar']//span[text()='%s']" % i)
-        easy_click_1st_displayed_element(elements)
-    easy_click(driver, By.XPATH, "//label[text()='园区（入）']/..//input")
+        if not is_exist(driver, By.XPATH, "//label[text()='园区（出）']/..//div[@class='el-select__tags']//span[text()='%s']" % i):
+            elements = easy_find_elements(driver, By.XPATH, "//div[@class='el-scrollbar']//span[text()='%s']" % i)
+            easy_click_1st_displayed_element(elements)
+    easy_click(driver, By.XPATH, "//label[text()='园区（入）']/..//div")
     for i in places:
-        elements = easy_find_elements(driver, By.XPATH, "//div[@class='el-scrollbar']//span[text()='%s']" % i)
-        easy_click_1st_displayed_element(elements)
+        if not is_exist(driver, By.XPATH, "//label[text()='园区（入）']/..//div[@class='el-select__tags']//span[text()='%s']" % i):
+            elements = easy_find_elements(driver, By.XPATH, "//div[@class='el-scrollbar']//span[text()='%s']" % i)
+            easy_click_1st_displayed_element(elements)
     
     # 别的都选好了
     easy_click(driver, By.XPATH, "//span[text()='保存 ']")
+    input()
     easy_click(driver, By.XPATH, "//div[@class='el-message-box__btns']/button[2]")
     print("今日信息已提交")
 
@@ -111,7 +122,7 @@ def check(driver):
 
 def send_msg(title, content=""):
     # https://sct.ftqq.com/
-    key = "123456"
+    key = ""
     api = f"https://sctapi.ftqq.com/{key}.send"
     data = {"text": title, "desp": content}
     requests.post(api, data=data)
