@@ -83,9 +83,9 @@ def stu_io(driver):
 
     # 选择园区往返
     easy_click(driver, By.XPATH, "//span[text()=' 园区往返申请']")
-    # 点确定
-    time.sleep(3)
-    easy_click(driver, By.XPATH, "//span[text()='确定']")
+    # 不用点确定了
+    # time.sleep(3)
+    # easy_click(driver, By.XPATH, "//span[text()='确定']")
     # 默认当天
     places = ["燕园", "物理学院"]
     easy_click(driver, By.XPATH, "//label[text()='园区（出）']/..//div")
